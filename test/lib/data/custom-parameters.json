@@ -1,0 +1,486 @@
+{
+    "$Version": "4.01",
+    "$Reference": {
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Capabilities.V1",
+                    "$Alias": "Capabilities"
+                }
+            ]
+        },
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Core.V1",
+                    "$Alias": "Core"
+                }
+            ]
+        }
+    },
+    "custom.parameters": {
+        "$Alias": "this",
+        "@Core.DefaultNamespace": true,
+        "ent": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "name"
+            ],
+            "name": {}
+        },
+        "act": [
+            {
+                "$Kind": "Action",
+                "$Parameter": [
+                    {
+                        "$Name": "par",
+                        "$Nullable": true
+                    }
+                ],
+                "$ReturnType": {
+                    "$Type": "this.ent",
+                    "$Nullable": true
+                }
+            },
+            {
+                "$Kind": "Action",
+                "$IsBound": true,
+                "$Parameter": [
+                    {
+                        "$Name": "it",
+                        "$Type": "this.ent",
+                        "$Nullable": true
+                    },
+                    {
+                        "$Name": "par",
+                        "$Nullable": true
+                    }
+                ],
+                "$ReturnType": {
+                    "$Type": "this.ent",
+                    "$Nullable": true
+                }
+            }
+        ],
+        "func": [
+            {
+                "$Kind": "Function",
+                "$IsBound": true,
+                "$Parameter": [
+                    {
+                        "$Name": "it",
+                        "$Type": "this.ent",
+                        "$Nullable": true
+                    },
+                    {
+                        "$Name": "par",
+                        "$Nullable": true
+                    }
+                ],
+                "$ReturnType": {
+                    "$Type": "this.ent",
+                    "$Nullable": true
+                }
+            },
+            {
+                "$Kind": "Function",
+                "$Parameter": [
+                    {
+                        "$Name": "par",
+                        "$Nullable": true
+                    }
+                ],
+                "$ReturnType": {
+                    "$Type": "this.ent",
+                    "$Nullable": true
+                }
+            }
+        ],
+        "box": {
+            "$Kind": "EntityContainer",
+            "@Capabilities.KeyAsSegmentSupported": true,
+            "ents": {
+                "$Collection": true,
+                "$Type": "this.ent"
+            },
+            "sing": {
+                "$Type": "this.ent",
+                "$Nullable": true
+            },
+            "act": {
+                "$Action": "this.act",
+                "$EntitySet": "ents"
+            },
+            "func": {
+                "$Function": "this.func",
+                "$EntitySet": "ents"
+            }
+        },
+        "$Annotations": {
+            "this.box/ents": {
+                "@Capabilities.ReadRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-read",
+                            "Description": "Custom Header for Read",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-read",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customRead",
+                            "Description": "Custom Query Option for Read",
+                            "Required": true,
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "ReadByKeyRestrictions": {
+                        "CustomHeaders": [
+                            {
+                                "Name": "custom-read-by-key",
+                                "Description": "Custom Header for Read by Key",
+                                "Required": false,
+                                "DocumentationURL": "https://docs.example.com/apis/headers/custom-read-by-key"
+                            }
+                        ],
+                        "CustomQueryOptions": [
+                            {
+                                "Name": "customReadByKey",
+                                "Description": "Custom Query Option for Read by Key",
+                                "DocumentationURL": "https://docs.example.com/apis/options/customReadByKey",
+                                "ExampleValues": [
+                                    {
+                                        "Description": "Example Value",
+                                        "Value": "example"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "@Capabilities.InsertRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-insert",
+                            "Description": "Custom Header for Insert",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-insert",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customInsert",
+                            "Description": "Custom Query Option for Insert",
+                            "Required": false,
+                            "DocumentationURL": "https://docs.example.com/apis/options/customInsert",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "@Capabilities.UpdateRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-update",
+                            "Description": "Custom Header for Update",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-update",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customUpdate",
+                            "Description": "Custom Query Option for Update",
+                            "Required": false,
+                            "DocumentationURL": "https://docs.example.com/apis/options/customUpdate",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "@Capabilities.DeleteRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-delete",
+                            "Description": "Custom Header for Delete",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-delete",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customDelete",
+                            "Description": "Custom Query Option for Delete",
+                            "Required": false,
+                            "DocumentationURL": "https://docs.example.com/apis/options/customDelete",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "this.box/sing": {
+                "@Capabilities.ReadRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-read",
+                            "Description": "Custom Header for Read Singleton",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-read",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customRead",
+                            "Description": "Custom Query Option for Read Singleton",
+                            "Required": true,
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "@Capabilities.UpdateRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-update",
+                            "Description": "Custom Header for Update Singleton",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-update",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customUpdate",
+                            "Description": "Custom Query Option for Update Singleton",
+                            "Required": false,
+                            "DocumentationURL": "https://docs.example.com/apis/options/customUpdate",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "@Capabilities.DeleteRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-delete",
+                            "Description": "Custom Header for Delete Singleton",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-delete",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customDelete",
+                            "Description": "Custom Query Option for Delete Singleton",
+                            "Required": false,
+                            "DocumentationURL": "https://docs.example.com/apis/options/customDelete",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "this.act()": {
+                "@Capabilities.OperationRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-unbound-action",
+                            "Description": "Custom Header for Unbound Action",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-unbound-action",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customUnboundAction",
+                            "Description": "Custom Query Option for Unbound Action",
+                            "Required": false,
+                            "DocumentationURL": "https://docs.example.com/apis/options/customUnboundAction",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "this.act(this.ent)": {
+                "@Capabilities.OperationRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-bound-action",
+                            "Description": "Custom Header for Bound Action",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-bound-action",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customBoundAction",
+                            "Description": "Custom Query Option for Bound Action",
+                            "Required": false,
+                            "DocumentationURL": "https://docs.example.com/apis/options/customBoundAction",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "this.func(Edm.String)": {
+                "@Capabilities.OperationRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-unbound-function",
+                            "Description": "Custom Header for Unbound Function",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-unbound-function",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customUnboundFunction",
+                            "Description": "Custom Query Option for Unbound Function",
+                            "Required": false,
+                            "DocumentationURL": "https://docs.example.com/apis/options/customUnboundFunction",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            "this.func(this.ent,Edm.String)": {
+                "@Capabilities.OperationRestrictions": {
+                    "CustomHeaders": [
+                        {
+                            "Name": "custom-bound-function",
+                            "Description": "Custom Header for Bound Function",
+                            "Required": true,
+                            "DocumentationURL": "https://docs.example.com/apis/headers/custom-bound-function",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ],
+                    "CustomQueryOptions": [
+                        {
+                            "Name": "customBoundFunction",
+                            "Description": "Custom Query Option for Bound Function",
+                            "Required": false,
+                            "DocumentationURL": "https://docs.example.com/apis/options/customBoundFunction",
+                            "ExampleValues": [
+                                {
+                                    "Description": "Example Value",
+                                    "Value": "example"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "$EntityContainer": "custom.parameters.box"
+}
