@@ -1,4 +1,4 @@
-const cds = require('../../cds-plugin')
+const cds = require('../../../cds-plugin')
 const { compile: { to: { openapi: toOpenApi } } } = cds
 
 const someOpenApi = { openapi: '3.0.2', info: {}, servers: [{}], tags: [{}], paths: {}, components: {} }
