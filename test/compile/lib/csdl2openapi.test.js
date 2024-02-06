@@ -16,7 +16,7 @@ const assert = require('assert');
 // (external) annotations on actions, functions, parameters, returntype
 // control mapping of reference URLs
 
-const lib = require('../../../srv/compile/lib/csdl2openapi.js');
+const lib = require('../../../lib/compile/csdl2openapi.js');
 
 const example1 = require('./data/csdl-16.1.json');
 const result1 = require('./data/csdl-16.1.openapi3.json');
