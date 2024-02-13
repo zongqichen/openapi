@@ -1,0 +1,21 @@
+{
+  "name": "@cap-js/openapi",
+  "version": "1.0.0",
+  "description": "CAP cds-plugin for openapi compilation",
+  "main": "cds-plugin.js",
+  "scripts": {
+    "test": "npx jest --silent",
+    "lint": "npx eslint ."
+  }, 
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sap/cds": "^7.5.2",
+    "pluralize": "^8.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29",
+    "eslint": "^8.56.0"
+  }
+}

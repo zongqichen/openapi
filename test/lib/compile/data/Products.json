@@ -1,0 +1,198 @@
+{
+    "$Version": "4.0",
+    "$Reference": {
+        "./People.xml": {
+            "$Include": [
+                {
+                    "$Namespace": "PeopleService"
+                }
+            ]
+        }
+    },
+    "ProductService": {
+        "Product": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "ID"
+            ],
+            "ID": {
+                "$Type": "Edm.Int32"
+            },
+            "Name": {
+                "$Nullable": true
+            },
+            "Description": {
+                "$Nullable": true
+            },
+            "ReleaseDate": {
+                "$Type": "Edm.DateTimeOffset",
+                "$Precision": 0
+            },
+            "DiscontinuedDate": {
+                "$Type": "Edm.DateTimeOffset",
+                "$Nullable": true,
+                "$Precision": 0
+            },
+            "Rating": {
+                "$Type": "Edm.Int16"
+            },
+            "Price": {
+                "$Type": "Edm.Double"
+            },
+            "Categories": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "ProductService.Category",
+                "$Partner": "Products"
+            },
+            "Supplier": {
+                "$Kind": "NavigationProperty",
+                "$Type": "PeopleService.Supplier",
+                "$Nullable": true,
+                "$Partner": "Products"
+            },
+            "ProductDetail": {
+                "$Kind": "NavigationProperty",
+                "$Type": "ProductService.ProductDetail",
+                "$Nullable": true,
+                "$Partner": "Product"
+            }
+        },
+        "FeaturedProduct": {
+            "$Kind": "EntityType",
+            "$BaseType": "ProductService.Product",
+            "Advertisement": {
+                "$Kind": "NavigationProperty",
+                "$Type": "ProductService.Advertisement",
+                "$Nullable": true,
+                "$Partner": "FeaturedProduct"
+            }
+        },
+        "ProductDetail": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "ProductID"
+            ],
+            "ProductID": {
+                "$Type": "Edm.Int32"
+            },
+            "Details": {
+                "$Nullable": true
+            },
+            "Product": {
+                "$Kind": "NavigationProperty",
+                "$Type": "ProductService.Product",
+                "$Nullable": true,
+                "$Partner": "ProductDetail"
+            }
+        },
+        "Category": {
+            "$Kind": "EntityType",
+            "$OpenType": true,
+            "$Key": [
+                "ID"
+            ],
+            "ID": {
+                "$Type": "Edm.Int32"
+            },
+            "Name": {
+                "$Nullable": true
+            },
+            "Products": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "ProductService.Product",
+                "$Partner": "Categories"
+            }
+        },
+        "Advertisement": {
+            "$Kind": "EntityType",
+            "$HasStream": true,
+            "$Key": [
+                "ID"
+            ],
+            "ID": {
+                "$Type": "Edm.Guid"
+            },
+            "Name": {
+                "$Nullable": true
+            },
+            "AirDate": {
+                "$Type": "Edm.DateTimeOffset",
+                "$Precision": 0
+            },
+            "FeaturedProduct": {
+                "$Kind": "NavigationProperty",
+                "$Type": "ProductService.FeaturedProduct",
+                "$Nullable": true,
+                "$Partner": "Advertisement"
+            }
+        },
+        "Discount": [
+            {
+                "$Kind": "Action",
+                "$IsBound": true,
+                "$Parameter": [
+                    {
+                        "$Name": "product",
+                        "$Type": "ProductService.Product",
+                        "$Nullable": true
+                    },
+                    {
+                        "$Name": "discountPercentage",
+                        "$Type": "Edm.Int32"
+                    }
+                ],
+                "$ReturnType": {
+                    "$Type": "Edm.Double"
+                }
+            }
+        ],
+        "Container": {
+            "$Kind": "EntityContainer",
+            "Products": {
+                "$Collection": true,
+                "$Type": "ProductService.Product",
+                "$NavigationPropertyBinding": {
+                    "ProductService.FeaturedProduct/Advertisement": "Advertisements",
+                    "Categories": "Categories",
+                    "Supplier": "PeopleService.Container/Suppliers",
+                    "ProductDetail": "ProductDetails"
+                }
+            },
+            "ProductDetails": {
+                "$Collection": true,
+                "$Type": "ProductService.ProductDetail",
+                "$NavigationPropertyBinding": {
+                    "Product": "Products"
+                }
+            },
+            "Categories": {
+                "$Collection": true,
+                "$Type": "ProductService.Category",
+                "$NavigationPropertyBinding": {
+                    "Products": "Products"
+                }
+            },
+            "Advertisements": {
+                "$Collection": true,
+                "$Type": "ProductService.Advertisement",
+                "$NavigationPropertyBinding": {
+                    "FeaturedProduct": "Products"
+                }
+            }
+        },
+        "$Annotations": {
+            "ProductService.Container": {
+                "@Org.OData.Display.V1.Description": "This is a sample OData service with vocabularies"
+            },
+            "ProductService.Product": {
+                "@Org.OData.Display.V1.Description": "All Products available in the online store"
+            },
+            "ProductService.Product/Name": {
+                "@Org.OData.Display.V1.DisplayName": "Product Name"
+            }
+        }
+    },
+    "$EntityContainer": "ProductService.Container"
+}

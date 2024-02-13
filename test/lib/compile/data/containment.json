@@ -1,0 +1,374 @@
+{
+    "$Version": "4.01",
+    "$Reference": {
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Core.V1",
+                    "$Alias": "Core",
+                    "@Core.DefaultNamespace": true
+                }
+            ]
+        },
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Capabilities.V1",
+                    "$Alias": "Capabilities"
+                }
+            ]
+        },
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Validation.V1",
+                    "$Alias": "Validation"
+                }
+            ]
+        }
+    },
+    "Containment": {
+        "$Alias": "self",
+        "Whole": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "ID"
+            ],
+            "ID": {},
+            "Description": {
+                "$Nullable": true
+            },
+            "One": {
+                "$Kind": "NavigationProperty",
+                "$Type": "self.Part",
+                "$Nullable": true,
+                "$ContainsTarget": true
+            },
+            "Many": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "self.Part",
+                "$ContainsTarget": true
+            }
+        },
+        "Part": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "index"
+            ],
+            "index": {
+                "$Type": "Edm.Int32"
+            },
+            "One": {
+                "$Kind": "NavigationProperty",
+                "$Type": "self.SubPart",
+                "$Nullable": true,
+                "$ContainsTarget": true
+            },
+            "Many": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "self.SubPart",
+                "$ContainsTarget": true
+            },
+            "ManyReadListOnly": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "self.SubPart",
+                "$ContainsTarget": true
+            },
+            "ManyReadByKeyOnly": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "self.SubPart",
+                "$ContainsTarget": true
+            }
+        },
+        "SubPart": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "One",
+                "Two"
+            ],
+            "One": {
+                "$Type": "Edm.Int32"
+            },
+            "Two": {
+                "$Type": "Edm.Int32"
+            }
+        },
+        "Like": [
+            {
+                "$Kind": "Action",
+                "$IsBound": true,
+                "@Core.Description": "I like this whole",
+                "$Parameter": [
+                    {
+                        "$Name": "__it",
+                        "$Type": "self.Whole",
+                        "$Nullable": true
+                    }
+                ]
+            },
+            {
+                "$Kind": "Action",
+                "$IsBound": true,
+                "@Core.Description": "I like all of these wholes",
+                "$Parameter": [
+                    {
+                        "$Name": "__it",
+                        "$Collection": true,
+                        "$Type": "self.Whole"
+                    }
+                ]
+            },
+            {
+                "$Kind": "Action",
+                "$IsBound": true,
+                "@Core.Description": "I like this part",
+                "$Parameter": [
+                    {
+                        "$Name": "__it",
+                        "$Type": "self.Part",
+                        "$Nullable": true
+                    }
+                ]
+            },
+            {
+                "$Kind": "Action",
+                "$IsBound": true,
+                "@Core.Description": "I like all of these parts",
+                "$Parameter": [
+                    {
+                        "$Name": "__it",
+                        "$Collection": true,
+                        "$Type": "self.Part"
+                    }
+                ]
+            }
+        ],
+        "Likes": [
+            {
+                "$Kind": "Function",
+                "$IsBound": true,
+                "@Core.Description": "How many like this whole",
+                "$Parameter": [
+                    {
+                        "$Name": "__it",
+                        "$Type": "self.Whole",
+                        "$Nullable": true
+                    }
+                ],
+                "$ReturnType": {
+                    "$Type": "Edm.Int32",
+                    "$Nullable": true
+                }
+            },
+            {
+                "$Kind": "Function",
+                "$IsBound": true,
+                "@Core.Description": "How many like these wholes",
+                "$Parameter": [
+                    {
+                        "$Name": "__it",
+                        "$Collection": true,
+                        "$Type": "self.Whole"
+                    }
+                ],
+                "$ReturnType": {
+                    "$Type": "Edm.Int32",
+                    "$Nullable": true
+                }
+            },
+            {
+                "$Kind": "Function",
+                "$IsBound": true,
+                "@Core.Description": "How many like this part",
+                "$Parameter": [
+                    {
+                        "$Name": "__it",
+                        "$Type": "self.Part",
+                        "$Nullable": true
+                    }
+                ],
+                "$ReturnType": {
+                    "$Type": "Edm.Int32",
+                    "$Nullable": true
+                }
+            },
+            {
+                "$Kind": "Function",
+                "$IsBound": true,
+                "@Core.Description": "How many like these parts",
+                "$Parameter": [
+                    {
+                        "$Name": "__it",
+                        "$Collection": true,
+                        "$Type": "self.Part"
+                    }
+                ],
+                "$ReturnType": {
+                    "$Type": "Edm.Int32",
+                    "$Nullable": true
+                }
+            }
+        ],
+        "Folder": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "Name"
+            ],
+            "Name": {},
+            "Description": {
+                "$Nullable": true
+            },
+            "Folders": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "self.Folder",
+                "$ContainsTarget": true
+            }
+        },
+        "Container": {
+            "$Kind": "EntityContainer",
+            "@Capabilities.BatchSupported": false,
+            "Wholes": {
+                "$Collection": true,
+                "$Type": "self.Whole",
+                "@Core.Description": "List of containers"
+            },
+            "TheWhole": {
+                "$Type": "self.Whole",
+                "@Core.Description": "Special container",
+                "@Capabilities.NavigationRestrictions": {
+                    "RestrictedProperties": [
+                        {
+                            "NavigationProperty": "One/Many",
+                            "InsertRestrictions": {
+                                "Description": "Supports insert"
+                            },
+                            "UpdateRestrictions": {
+                                "Description": "Supports update"
+                            },
+                            "DeleteRestrictions": {
+                                "Description": "Supports delete"
+                            }
+                        },
+                        {
+                            "NavigationProperty": "One/ManyReadListOnly",
+                            "Navigability": "None"
+                        },
+                        {
+                            "NavigationProperty": "One/ManyReadByKeyOnly",
+                            "Navigability": "None",
+                            "SelectSupport": {
+                                "Supported": false
+                            }
+                        },
+                        {
+                            "NavigationProperty": "Many/ManyReadListOnly",
+                            "ReadRestrictions": {
+                                "Description": "Supports only read-list",
+                                "LongDescription": "Does not support any system query options"
+                            },
+                            "FilterRestrictions": {
+                                "Filterable": false
+                            },
+                            "SearchRestrictions": {
+                                "Searchable": false
+                            },
+                            "SortRestrictions": {
+                                "Sortable": false
+                            },
+                            "TopSupported": false,
+                            "SkipSupported": false,
+                            "SelectSupport": {
+                                "Supported": false
+                            },
+                            "IndexableByKey": false,
+                            "InsertRestrictions": {
+                                "Insertable": false
+                            }
+                        },
+                        {
+                            "NavigationProperty": "Many/ManyReadByKeyOnly",
+                            "InsertRestrictions": {
+                                "Insertable": false
+                            },
+                            "ReadRestrictions": {
+                                "Readable": false,
+                                "ReadByKeyRestrictions": {
+                                    "Readable": true,
+                                    "Description": "Supports only read-by-key",
+                                    "LongDescription": "Does not support `$select`"
+                                }
+                            },
+                            "SelectSupport": {
+                                "Supported": false
+                            },
+                            "UpdateRestrictions": {
+                                "Updatable": false
+                            },
+                            "DeleteRestrictions": {
+                                "Deletable": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Folders": {
+                "$Collection": true,
+                "$Type": "self.Folder",
+                "@Core.Description": "List of folders"
+            }
+        },
+        "$Annotations": {
+            "self.Container/Wholes": {
+                "@Capabilities.NavigationRestrictions": {
+                    "RestrictedProperties": [
+                        {
+                            "NavigationProperty": "One/ManyReadListOnly",
+                            "Navigability": "None",
+                            "SelectSupport": {
+                                "Supported": false
+                            }
+                        },
+                        {
+                            "NavigationProperty": "One/ManyReadByKeyOnly",
+                            "Navigability": "None"
+                        },
+                        {
+                            "NavigationProperty": "Many/ManyReadListOnly",
+                            "IndexableByKey": false,
+                            "InsertRestrictions": {
+                                "Insertable": false
+                            }
+                        },
+                        {
+                            "NavigationProperty": "Many/ManyReadByKeyOnly",
+                            "InsertRestrictions": {
+                                "Insertable": false
+                            },
+                            "ReadRestrictions": {
+                                "Readable": false,
+                                "ReadByKeyRestrictions": {
+                                    "Readable": true
+                                }
+                            },
+                            "SelectSupport": {
+                                "Supported": false
+                            },
+                            "UpdateRestrictions": {
+                                "Updatable": false
+                            },
+                            "DeleteRestrictions": {
+                                "Deletable": false
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "$EntityContainer": "Containment.Container"
+}
