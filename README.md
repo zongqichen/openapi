@@ -24,15 +24,16 @@ In this guide, we use the [Incidents Management reference sample app](https://gi
 
 ## Generate OpenAPI document
 
-### 1. Using programatic API
+### 1. Usage of programatic API
 
 await `cds.compile(<file path>).to.openapi()` to invoke `cds compile to openapi` programatically.
 
 
-### 2. Using CLI command
+### 2. Usage from CLI 
 
 Run `cds compile <file path> -2 openapi` in the CLI to generate the OpenAPI document.
 
+For more information, visit [CAPire](https://cap.cloud.sap/docs/advanced/openapi#cli)
 
 ## Contributing
 
