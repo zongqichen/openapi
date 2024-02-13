@@ -1,0 +1,491 @@
+{
+    "$Version": "4.01",
+    "$Reference": {
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Core.V1",
+                    "$Alias": "Core",
+                    "@Core.DefaultNamespace": true
+                }
+            ]
+        },
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Capabilities.V1",
+                    "$Alias": "Capabilities"
+                }
+            ]
+        },
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Validation.V1",
+                    "$Alias": "Validation"
+                }
+            ]
+        }
+    },
+    "Supported.Annotations": {
+        "$Alias": "self",
+        "SinglePartKey": {
+            "$Kind": "EntityType", 
+            "@cds.autoexpose": true,
+            "$Key": [
+                "ID"
+            ],
+            "ID": {},
+            "Pattern": {
+                "$Nullable": true,
+                "@Validation.Pattern": "^.+$"
+            },
+            "PatternExt": {
+                "$Nullable": true
+            },
+            "AllowedValues": {
+                "$Nullable": true,
+                "@Validation.AllowedValues": [
+                    {
+                        "Value": "red"
+                    },
+                    {
+                        "Value": "green"
+                    },
+                    {
+                        "Value": "blue"
+                    }
+                ]
+            },
+            "AllowedValuesExt": {
+                "$Nullable": true
+            },
+            "Maximum": {
+                "$Type": "Edm.Decimal",
+                "$Nullable": true,
+                "$Precision": 5,
+                "@Validation.Maximum@Validation.Exclusive": true,
+                "@Validation.Maximum": 0
+            },
+            "MaximumExt": {
+                "$Type": "Edm.Decimal",
+                "$Nullable": true
+            },
+            "Minimum": {
+                "$Type": "Edm.Decimal",
+                "$Nullable": true,
+                "$Precision": 5,
+                "$Scale": 2,
+                "@Validation.Minimum": 1
+            },
+            "MinimumExt": {
+                "$Type": "Edm.Decimal",
+                "$Scale": 5
+            },
+            "Example": {
+                "$Nullable": true,
+                "@Core.Example": {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml#Core.PrimitiveExampleValue",
+                    "Description": "Primitive example value",
+                    "Value": "Hello World"
+                }
+            },
+            "ExampleExt": {
+                "$Nullable": true
+            },
+            "Computed": {
+                "$Nullable": true,
+                "@Core.Computed": true
+            },
+            "ComputedExt": {
+                "$Nullable": true
+            },
+            "Immutable": {
+                "$Nullable": true,
+                "@Core.Immutable": true
+            },
+            "RequiredInFilter": {
+                "$Nullable": true
+            },
+            "ImmutableExt": {
+                "$Nullable": true
+            },
+            "AllOne": {
+                "$Kind": "NavigationProperty",
+                "$Type": "self.TwoPartKey",
+                "$Nullable": true
+            },
+            "AllMany": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "self.TwoPartKey"
+            },
+            "ReadOnlyOne": {
+                "$Kind": "NavigationProperty",
+                "$Type": "self.TwoPartKey",
+                "$Nullable": true
+            },
+            "ReadOnlyMany": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "self.TwoPartKey"
+            },
+            "NothingOne": {
+                "$Kind": "NavigationProperty",
+                "$Type": "self.TwoPartKey",
+                "$Nullable": true
+            },
+            "NothingMany": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "self.TwoPartKey"
+            }
+        },
+        "TwoPartKey": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "One",
+                "Two"
+            ],
+            "One": {
+                "$Type": "Edm.Int32"
+            },
+            "Two": {
+                "$Type": "Edm.Int32"
+            }
+        },
+        "Container": {
+            "$Kind": "EntityContainer",
+            "@Capabilities.BatchSupported": false,
+            "AllSet": {
+                "$Collection": true,
+                "$Type": "self.SinglePartKey",
+                "$NavigationPropertyBinding": {
+                    "AllOne": "TwoAllSet",
+                    "AllMany": "TwoAllSet",
+                    "ReadOnlyOne": "TwoReadOnlySet",
+                    "ReadOnlyMany": "TwoReadOnlySet",
+                    "NothingOne": "TwoNothingSet",
+                    "NothingMany": "TwoNothingSet"
+                },
+                "@Capabilities.FilterRestrictions": {
+                    "RequiresFilter": true,
+                    "RequiredProperties": [
+                        "RequiredInFilter"
+                    ]
+                },
+                "@Capabilities.SortRestrictions": {
+                    "NonSortableProperties": [
+                        "Example"
+                    ]
+                }
+            },
+            "NoNavigationSet": {
+                "$Collection": true,
+                "$Type": "self.SinglePartKey",
+                "@Capabilities.NavigationRestrictions": {
+                    "Navigability": "None"
+                }
+            },
+            "OneNavigationSet": {
+                "$Collection": true,
+                "$Type": "self.SinglePartKey",
+                "@Capabilities.NavigationRestrictions": {
+                    "Navigability": "None",
+                    "RestrictedProperties": [
+                        {
+                            "NavigationProperty": "AllMany",
+                            "Navigability": "Recursive"
+                        }
+                    ]
+                },
+                "@Capabilities.InsertRestrictions": {
+                    "Insertable": false
+                },
+                "@Capabilities.UpdateRestrictions": {
+                    "Updatable": false
+                },
+                "@Capabilities.DeleteRestrictions": {
+                    "Deletable": false
+                }
+            },
+            "ReadListOnlySet": {
+                "$Collection": true,
+                "$Type": "self.SinglePartKey",
+                "$NavigationPropertyBinding": {
+                    "AllOne": "TwoAllSet",
+                    "AllMany": "TwoAllSet",
+                    "ReadOnlyOne": "TwoReadOnlySet",
+                    "ReadOnlyMany": "TwoReadOnlySet",
+                    "NothingOne": "TwoNothingSet",
+                    "NothingMany": "TwoNothingSet"
+                },
+                "@Capabilities.InsertRestrictions": {
+                    "Insertable": false
+                },
+                "@Capabilities.ReadRestrictions": {
+                    "Description": "Supports only read-list",
+                    "LongDescription": "Does not support any query options"
+                },
+                "@Capabilities.IndexableByKey": false,
+                "@Capabilities.SkipSupported": false,
+                "@Capabilities.TopSupported": false,
+                "@Capabilities.CountRestrictions": {
+                    "Countable": false
+                },
+                "@Capabilities.FilterRestrictions": {
+                    "Filterable": false
+                },
+                "@Capabilities.SearchRestrictions": {
+                    "Searchable": false
+                },
+                "@Capabilities.SortRestrictions": {
+                    "Sortable": false
+                },
+                "@Capabilities.SelectSupport": {
+                    "Supported": false
+                },
+                "@Capabilities.ExpandRestrictions": {
+                    "Expandable": false
+                }
+            },
+            "AllSingleton": {
+                "$Type": "self.SinglePartKey",
+                "@Core.Description": "First Singleton",
+                "$NavigationPropertyBinding": {
+                    "AllOne": "TwoAllSet",
+                    "AllMany": "TwoAllSet",
+                    "ReadOnlyOne": "TwoReadOnlySet",
+                    "ReadOnlyMany": "TwoReadOnlySet",
+                    "NothingOne": "TwoNothingSet",
+                    "NothingMany": "TwoNothingSet"
+                }
+            },
+            "ReadOnlySingleton": {
+                "$Type": "self.SinglePartKey",
+                "$NavigationPropertyBinding": {
+                    "AllOne": "TwoAllSet",
+                    "AllMany": "TwoAllSet",
+                    "ReadOnlyOne": "TwoReadOnlySet",
+                    "ReadOnlyMany": "TwoReadOnlySet",
+                    "NothingOne": "TwoNothingSet",
+                    "NothingMany": "TwoNothingSet"
+                },
+                "@Capabilities.UpdateRestrictions": {
+                    "Updatable": false
+                },
+                "@Capabilities.ExpandRestrictions": {
+                    "Expandable": false
+                },
+                "@Capabilities.ReadRestrictions": {
+                    "Description": "Supports only read",
+                    "LongDescription": "Does not support `$select` and `$expand`"
+                },
+                "@Capabilities.SelectSupport": {
+                    "Supported": false
+                },
+                "@Capabilities.NavigationRestrictions": {
+                    "RestrictedProperties": [
+                        {
+                            "NavigationProperty": "AllMany",
+                            "InsertRestrictions": {
+                                "Insertable": false
+                            },
+                            "SortRestrictions": {
+                                "NonSortableProperties": [
+                                    "One"
+                                ]
+                            }
+                        },
+                        {
+                            "NavigationProperty": "ReadOnlyMany",
+                            "InsertRestrictions": {
+                                "Insertable": true
+                            }
+                        },
+                        {
+                            "NavigationProperty": "NothingMany",
+                            "ReadRestrictions": {
+                                "Readable": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "TwoAllSet": {
+                "$Collection": true,
+                "$Type": "self.TwoPartKey"
+            },
+            "TwoReadOnlySet": {
+                "$Collection": true,
+                "$Type": "self.TwoPartKey"
+            },
+            "TwoReadOnlyByKeySet": {
+                "$Collection": true,
+                "$Type": "self.TwoPartKey"
+            },
+            "TwoWriteOnlySet": {
+                "$Collection": true,
+                "$Type": "self.TwoPartKey"
+            },
+            "TwoNothingSet": {
+                "$Collection": true,
+                "$Type": "self.TwoPartKey"
+            },
+            "TwoWriteOnlySingleton": {
+                "$Type": "self.TwoPartKey"
+            },
+            "TwoNothingSingleton": {
+                "$Type": "self.TwoPartKey"
+            }
+        },
+        "$Annotations": {
+            "self.SinglePartKey/PatternExt": {
+                "@Validation.Pattern": "^.+$"
+            },
+            "self.SinglePartKey/AllowedValuesExt": {
+                "@Validation.AllowedValues": [
+                    {
+                        "Value": "red"
+                    },
+                    {
+                        "Value": "green"
+                    },
+                    {
+                        "Value": "blue"
+                    }
+                ]
+            },
+            "self.SinglePartKey/MaximumExt": {
+                "@Validation.Maximum": -1,
+                "@Core.Example": {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml#Core.PrimitiveExampleValue",
+                    "Value": -1
+                }
+            },
+            "self.SinglePartKey/MinimumExt": {
+                "@Validation.Minimum@Validation.Exclusive": true,
+                "@Validation.Minimum": 0,
+                "@Core.Example": {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml#Core.PrimitiveExampleValue",
+                    "Value": 1
+                }
+            },
+            "self.SinglePartKey/ExampleExt": {
+                "@Core.Example": {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml#Core.PrimitiveExampleValue",
+                    "Description": "Primitive example value",
+                    "Value": "Hello external World"
+                }
+            },
+            "self.SinglePartKey/ComputedExt": {
+                "@Core.Computed": true
+            },
+            "self.SinglePartKey/ImmutableExt": {
+                "@Core.Immutable": true
+            },
+            "self.Container/TwoAllSet": {
+                "@Capabilities.SortRestrictions": {
+                    "NonSortableProperties": [
+                        "Two"
+                    ]
+                },
+                "@Capabilities.InsertRestrictions": {
+                    "Insertable": true
+                }
+            },
+            "self.Container/TwoReadOnlySet": {
+                "@Capabilities.InsertRestrictions": {
+                    "Insertable": false
+                },
+                "@Capabilities.UpdateRestrictions": {
+                    "Updatable": false
+                },
+                "@Capabilities.DeleteRestrictions": {
+                    "Deletable": false
+                },
+                "@Capabilities.ReadRestrictions": {
+                    "Description": "Supports read-list",
+                    "LongDescription": "Does not support any query options"
+                },
+                "@Capabilities.SkipSupported": false,
+                "@Capabilities.TopSupported": false,
+                "@Capabilities.CountRestrictions": {
+                    "Countable": false
+                },
+                "@Capabilities.FilterRestrictions": {
+                    "Filterable": false
+                },
+                "@Capabilities.SortRestrictions": {
+                    "Sortable": false
+                },
+                "@Capabilities.SearchRestrictions": {
+                    "Searchable": false
+                },
+                "@Capabilities.SelectSupport": {
+                    "Supported": false
+                },
+                "@Capabilities.ExpandRestrictions": {
+                    "Expandable": false
+                }
+            },
+            "self.Container/TwoReadOnlyByKeySet": {
+                "@Capabilities.InsertRestrictions": {
+                    "Insertable": false
+                },
+                "@Capabilities.UpdateRestrictions": {
+                    "Updatable": false
+                },
+                "@Capabilities.DeleteRestrictions": {
+                    "Deletable": false
+                },
+                "@Capabilities.ReadRestrictions": {
+                    "Readable": false,
+                    "ReadByKeyRestrictions": {
+                        "Readable": true
+                    }
+                }
+            },
+            "self.Container/TwoWriteOnlySet": {
+                "@Capabilities.ReadRestrictions": {
+                    "Readable": false
+                },
+                "@Capabilities.InsertRestrictions": {
+                    "Description": "Supports insert"
+                },
+                "@Capabilities.UpdateRestrictions": {
+                    "Description": "Supports update"
+                },
+                "@Capabilities.DeleteRestrictions": {
+                    "Description": "Supports delete"
+                }
+            },
+            "self.Container/TwoNothingSet": {
+                "@Capabilities.InsertRestrictions": {
+                    "Insertable": false
+                },
+                "@Capabilities.ReadRestrictions": {
+                    "Readable": false
+                },
+                "@Capabilities.IndexableByKey": false
+            },
+            "self.Container/TwoWriteOnlySingleton": {
+                "@Capabilities.ReadRestrictions": {
+                    "Readable": false
+                },
+                "@Capabilities.UpdateRestrictions": {
+                    "Description": "Supports update"
+                }
+            },
+            "self.Container/TwoNothingSingleton": {
+                "@Capabilities.ReadRestrictions": {
+                    "Readable": false
+                },
+                "@Capabilities.UpdateRestrictions": {
+                    "Updatable": false
+                }
+            }
+        }
+    },
+    "$EntityContainer": "Supported.Annotations.Container"
+}

@@ -1,0 +1,125 @@
+{
+    "$Version": "4.0",
+    "$Reference": {
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Authorization.V1",
+                    "$Alias": "Auth"
+                }
+            ]
+        }
+    },
+    "auth.example": {
+        "$Alias": "self",
+        "Person": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "ID"
+            ],
+            "ID": {},
+            "Name": {
+                "$Nullable": true
+            }
+        },
+        "Container": {
+            "$Kind": "EntityContainer",
+            "People": {
+                "$Collection": true,
+                "$Type": "self.Person"
+            },
+            "@Auth.SecuritySchemes": [
+                {
+                    "Authorization": "api_key"
+                },
+                {
+                    "Authorization": "petstore_auth",
+                    "RequiredScopes": [
+                        "write:pets",
+                        "read:pets"
+                    ]
+                }
+            ],
+            "@Auth.Authorizations": [
+                {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml#Auth.ApiKey",
+                    "Name": "api_key",
+                    "Description": "Authentication via API key",
+                    "KeyName": "x-api-key",
+                    "Location": "Header"
+                },
+                {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml#Auth.Http",
+                    "Name": "http_bearer",
+                    "Description": "HTTP authentication with bearer token",
+                    "Scheme": "bearer",
+                    "BearerFormat": "JWT"
+                },
+                {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml#Auth.OAuth2AuthCode",
+                    "Name": "oauth_authcode",
+                    "Description": "Authentication via OAuth2 with authorization code flow",
+                    "Scopes": [
+                        {
+                            "Scope": "do:something",
+                            "Description": "do something"
+                        }
+                    ],
+                    "RefreshUrl": "https://example.com/api/oauth/refresh",
+                    "AuthorizationUrl": "https://example.com/api/oauth/dialog",
+                    "TokenUrl": "https://example.com/api/oauth/token"
+                },
+                {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml#Auth.OAuth2ClientCredentials",
+                    "Name": "oauth_clientcredentials",
+                    "Description": "Authentication via OAuth2 with client credentials flow",
+                    "Scopes": [
+                        {
+                            "Scope": "do:something",
+                            "Description": "do something"
+                        }
+                    ],
+                    "RefreshUrl": "https://example.com/api/oauth/refresh",
+                    "TokenUrl": "https://example.com/api/oauth/token"
+                },
+                {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml#Auth.OAuth2Implicit",
+                    "Name": "oauth_implicit",
+                    "Description": "Authentication via OAuth2 with implicit flow",
+                    "Scopes": [
+                        {
+                            "Scope": "write:foo",
+                            "Description": "modify foo"
+                        },
+                        {
+                            "Scope": "read:foo",
+                            "Description": "read foo"
+                        }
+                    ],
+                    "RefreshUrl": "https://example.com/api/oauth/refresh",
+                    "AuthorizationUrl": "https://example.com/api/oauth/dialog"
+                },
+                {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml#Auth.OAuth2Password",
+                    "Name": "oauth_password",
+                    "Description": "Authentication via OAuth2 with resource owner password flow",
+                    "Scopes": [
+                        {
+                            "Scope": "do:something",
+                            "Description": "do something"
+                        }
+                    ],
+                    "RefreshUrl": "https://example.com/api/oauth/refresh",
+                    "TokenUrl": "https://example.com/api/oauth/token"
+                },
+                {
+                    "@type": "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml#Auth.OpenIDConnect",
+                    "Name": "open_id",
+                    "Description": "Authentication via OpenID Connect",
+                    "IssuerUrl": "https://example.com/openid/issuer/location"
+                }
+            ]
+        }
+    },
+    "$EntityContainer": "auth.example.Container"
+}

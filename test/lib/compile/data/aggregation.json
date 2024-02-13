@@ -1,0 +1,191 @@
+{
+    "$Version": "4.0",
+    "$Reference": {
+        "https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Aggregation.V1.json": {
+            "$Include": [
+                {
+                    "$Namespace": "Org.OData.Aggregation.V1",
+                    "$Alias": "Aggregation"
+                }
+            ]
+        }
+    },
+    "org.example.odata.salesservice": {
+        "$Alias": "SalesModel",
+        "Category": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "ID"
+            ],
+            "ID": {},
+            "Products": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "SalesModel.Product"
+            },
+            "Name": {}
+        },
+        "Currency": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "Code"
+            ],
+            "Code": {},
+            "Name": {
+                "$Nullable": true,
+                "@Core.IsLanguageDependent": true
+            }
+        },
+        "Customer": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "ID"
+            ],
+            "ID": {},
+            "Sales": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "SalesModel.Sales"
+            },
+            "Name": {},
+            "Country": {}
+        },
+        "Product": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "ID"
+            ],
+            "ID": {},
+            "Category": {
+                "$Kind": "NavigationProperty",
+                "$Type": "SalesModel.Category",
+                "$Nullable": true
+            },
+            "Sales": {
+                "$Kind": "NavigationProperty",
+                "$Collection": true,
+                "$Type": "SalesModel.Sales"
+            },
+            "Name": {},
+            "Color": {},
+            "TaxRate": {
+                "$Type": "Edm.Decimal"
+            }
+        },
+        "Sales": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "ID"
+            ],
+            "ID": {},
+            "Customer": {
+                "$Kind": "NavigationProperty",
+                "$Type": "SalesModel.Customer"
+            },
+            "Time": {
+                "$Kind": "NavigationProperty",
+                "$Type": "SalesModel.Time"
+            },
+            "Product": {
+                "$Kind": "NavigationProperty",
+                "$Type": "SalesModel.Product"
+            },
+            "SalesOrganization": {
+                "$Kind": "NavigationProperty",
+                "$Type": "SalesModel.SalesOrganization"
+            },
+            "Currency": {
+                "$Kind": "NavigationProperty",
+                "$Type": "SalesModel.Currency"
+            },
+            "Amount": {
+                "$Type": "Edm.Decimal",
+                "$Nullable": true,
+                "@Aggregation.Aggregateable": true,
+                "@Aggregation.ContextDefiningProperties": [
+                    "Currency/Code"
+                ]
+            },
+            "@Aggregation.CustomAggregate#Forecast@Aggregation.ContextDefiningProperties": [
+                "Currency/Code"
+            ],
+            "@Aggregation.CustomAggregate#Forecast": "Edm.Decimal"
+        },
+        "SalesOrganization": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "ID"
+            ],
+            "ID": {},
+            "Superordinate": {
+                "$Kind": "NavigationProperty",
+                "$Type": "SalesModel.SalesOrganization",
+                "$Nullable": true
+            },
+            "Name": {}
+        },
+        "Time": {
+            "$Kind": "EntityType",
+            "$Key": [
+                "Date"
+            ],
+            "Date": {
+                "$Type": "Edm.Date",
+                "$Nullable": true
+            },
+            "Month": {
+                "$Nullable": true
+            },
+            "Quarter": {
+                "$Nullable": true
+            },
+            "Year": {
+                "$Nullable": true
+            }
+        },
+        "$Annotations": {
+            "SalesModel.Product": {
+                "@Aggregation.LeveledHierarchy#ProductHierarchy": {
+                    "Levels": [
+                        "Category/Name",
+                        "Name"
+                    ]
+                }
+            },
+            "SalesModel.Time": {
+                "@Aggregation.LeveledHierarchy#TimeHierarchy": {
+                    "Levels": [
+                        "Year",
+                        "Quarter",
+                        "Month"
+                    ]
+                }
+            },
+            "SalesModel.SalesOrganization": {
+                "@Aggregation.RecursiveHierarchy#SalesOrgHierarchy": {
+                    "NodeProperty": "ID",
+                    "ParentNodeProperty": "Superordinate/ID"
+                }
+            }
+        },
+        "Default": {
+            "$Kind": "EntityContainer",
+            "@Aggregation.ApplySupported": {
+                "PropertyRestrictions": true
+            },
+            "@Aggregation.CustomAggregate#Budget@Aggregation.ContextDefiningProperties": [
+                "Currencies/Code"
+            ],
+            "@Aggregation.CustomAggregate#Budget": "Edm.Decimal",
+            "Sales": {
+                "$Collection": true,
+                "$Type": "SalesModel.Sales"
+            },
+            "Currencies": {
+                "$Collection": true,
+                "$Type": "SalesModel.Currency"
+            }
+        }
+    },
+    "$EntityContainer": "org.example.odata.salesservice.Default"
+}
