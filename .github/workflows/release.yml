@@ -21,7 +21,7 @@ jobs:
     - name: Run Unit Tests
       run: |
         npm install
-        npm install file:. --no-save --force
+        npm run lint
         npm run test
 
     - name: get-version
@@ -37,6 +37,6 @@ jobs:
       with:
         tag: 'v${{ steps.package-version.outputs.current-version }}'
         body: '${{ steps.parse-changelog.outputs.body }}'
-    - run: npm publish --access public
+    - run: npm publish --access public --dry
       env:
         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
