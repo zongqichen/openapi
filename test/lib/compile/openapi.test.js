@@ -1,4 +1,4 @@
-require('../../../cds-plugin')
+require('../../..').registerOpenapiCompileTarget();
 const cds = require('@sap/cds')
 const { compile: { to: { openapi: toOpenApi } } } = cds
 
