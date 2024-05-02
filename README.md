@@ -9,13 +9,26 @@ The `@cap-js/openapi` is a package that provides support for OpenAPI document co
 ### Table of Contents
 
 - [Requirements and Setup](#requirements-and-setup)
+- [Generate OpenAPI document](#generate-openapi-document)
 - [Contributing](#contributing)
 - [Code of Conduct](#code-of-conduct)
 - [Licensing](#licensing)
 
 ## Requirements and Setup
 
-### Generate OpenAPI document
+### Installation
+
+```sh
+$ npm install @cap-js/openapi
+```
+
+### Usage
+
+```sh
+require("@cap-js/openapi").registerOpenapiCompileTarget()
+```
+
+## Generate OpenAPI document
 
 ### 1. Usage of programatic API
 
@@ -30,7 +43,7 @@ await cds.compile(<filename>).to.openapi()
 Run the following command in the CLI to generate the OpenAPI document.
 
 ```sh
-cds compile <filename> --to openapi
+$ cds compile <filename> --to openapi
 ```
 
 For more information, visit [capire](https://cap.cloud.sap/docs/advanced/openapi#cli)
