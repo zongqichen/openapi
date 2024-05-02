@@ -1,4 +1,4 @@
-require('../../..').registerOpenapiCompileTarget();
+require('../../..').register();
 const cds = require('@sap/cds')
 const { compile: { to: { openapi: toOpenApi } } } = cds
 
