@@ -25,7 +25,7 @@ $ npm install @cap-js/openapi
 ### Usage
 
 ```sh
-require("@cap-js/openapi").registerOpenapiCompileTarget()
+require("@cap-js/openapi").register()
 ```
 
 ## Generate OpenAPI document

@@ -6,7 +6,7 @@ function _lazyRegisterCompileTarget() {
   return value
 }
 
-const registerOpenapiCompileTarget = () => {
+const register = () => {
     Object.defineProperty(cds.compile.to, "openapi", {
       get: _lazyRegisterCompileTarget,
       configurable: true
@@ -14,4 +14,4 @@ const registerOpenapiCompileTarget = () => {
   }
 
 
-module.exports = { registerOpenapiCompileTarget }
+module.exports = { register }
