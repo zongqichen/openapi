@@ -28,7 +28,7 @@
     "pluralize": "^8.0.0"
   },
   "peerDependencies": {
-    "@sap/cds": ">=7.3 || ^8.0.0-beta"
+    "@sap/cds": ">=7.6"
   },
   "devDependencies": {
     "jest": "^29",
