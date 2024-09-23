@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 - Entities annotated with `@cds.autoexpose[d]` but explicitly exposed in the service are now made read-write.
 - Added a wrapper `properties` object for primitive return types.
 
+- Adding protocol and service name information to the server URL incase of `openapi:servers` option.
+
 ## Version 1.0.5 - 30.07.2024
 
 ### Changed
